@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: dw
+    database: warehouse
+    schema: dw
+    tables:
+      - name: dim_products
+      - name: fct_order_items
+      - name: dim_warehouses
+      - name: fct_inventory_snapshots
+      - name: fct_returns
+      - name: fct_orders
+      - name: fct_payments
+      - name: fct_shipments
+      - name: dim_sales_channels
+      - name: dim_status
+      - name: dim_employees
+
+models:
+  - name: mart_product_sales
+    description: "Product Sales Analytical Ready Table"
+    columns:
+      - name: category
+      - name: product_name
+      - name: total_orders
+      - name: total_order_items
+      - name: total_units_sold
+      - name: gross_sales
+      - name: total_discount
+      - name: avg_unit_price
+  
+  - name: mart_inventory_risk
+    description: "Inventory Analysis"
+    columns:
+      - name: snapshot_date
+      - name: product_id
+      - name: product_name
+      - name: category
+      - name: total_quantity_on_hand
+      - name: total_quantity_available
+      - name: total_quantity_reserved
+      - name: reorder_point
+      - name: inventory_risk
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Critical","Warning","Healthy"]
+      - name: rolling_7_day_avg_available
+      - name: rolling_14_day_avg_available
+
+  - name: "mart_vw_active_employees"
+    description: "Active Employee View"
+    columns:
+      - name: employee_id
+      - name: name
+      - name: department
+      - name: job_title
+      - name: manager_id
+      - name: location
+      - name: salary_band
+      - name: effective_date

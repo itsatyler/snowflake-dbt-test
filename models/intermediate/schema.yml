@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: stg
+    database: warehouse
+    schema: stg
+    tables:
+      - name: stg_employees
+
+models:
+  - name: int_employees_latest
+    description: "Intermediate step in Employee Dimension"
+    columns:
+      - name: employee_id
+      - name: first_name
+      - name: last_name
+      - name: department
+      - name: job_title
+      - name: manager_id
+      - name: location
+      - name: employee_status
+      - name: salary_band
+      - name: effective_date
+      - name: ingest_date
+      - name: rn

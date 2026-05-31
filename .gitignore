@@ -1,0 +1,39 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# dbt
+target/
+dbt_packages/
+logs/
+dbt_internal_packages/
+.user.yml
+
+# Secrets / credentials — never commit
+.env
+.env.*
+*.env
+profiles.yml
+.dbt/
+*.pem
+*.key
+*.p8
+*.p12
+*.crt
+credentials.json
+secrets.json
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp

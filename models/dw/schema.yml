@@ -1,0 +1,342 @@
+version: 2
+
+sources:
+  - name: lnd
+    database: warehouse
+    schema: lnd
+    tables:
+      - name: raw_customers
+      - name: raw_products
+      - name: raw_order_items
+      - name: raw_warehouses
+      - name: raw_inventory_snapshots
+      - name: raw_payments
+      - name: raw_shipments
+      - name: raw_orders
+      - name: raw_returns
+
+models:
+  #  Dims
+  - name: dim_customers
+    description: "Customers Dimensions"
+    columns:
+      - name: dim_customer_id
+        description: "Surrogate key (md5 of customers_id)."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - unique
+      - name: state
+      - name: signup_date
+      - name: customer_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["active", "inactive"]
+      - name: last_updated
+  
+  - name: dim_products
+    description: "Products Dimensions"
+    columns:
+      - name: dim_product_id
+        description: "Surrogate key (md5 of product_id)"
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: sku
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+      - name: category
+      - name: standard_cost
+      - name: list_price
+        tests:
+          - not_null
+      - name: is_active
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["TRUE", "FALSE"]
+      - name: last_updated
+  
+  - name: dim_warehouses
+    description: "Warehouses Dimensions"
+    columns:
+      - name: dim_warehouse_id
+        description: "surrogate key (md5 of warehouse_id)"
+        tests:
+          - unique
+          - not_null
+      - name: warehouse_id
+        tests:
+          - unique
+          - not_null
+      - name: warehouse_name
+        tests:
+          - unique
+          - not_null
+      - name: state
+      - name: region
+  
+  - name: dim_status
+    description: "Status Dimension"
+    columns:
+      - name: dim_status_id
+        description: "surrogate key (md5 of status)"
+        tests:
+          - unique
+          - not_null
+      - name: status
+      - name: last_updated
+  
+  - name: dim_sales_channels
+    description: "Sales Channel Dimension (can be extended later)"
+    columns:
+      - name: dim_sales_channels_id
+        description: "Surrogate key (md5 of sales_channel)"
+        tests:
+          - unique
+          - not_null
+      - name: sales_channel
+      - name: last_updated
+  
+  - name: dim_employees
+    description: "Employees Dimension (SCD2 - unique_key employee_id)"
+    columns:
+      - name: dim_employee_id
+        description: "Surrogate key of (md5 of employee_id (UK))"
+        tests:
+          - unique
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+      - name: first_name
+      - name: last_name
+      - name: department
+      - name: job_title
+      - name: manager_id
+        description: "Manager ID must match an Employee ID"
+        data_tests:
+          - relationships:
+              name: test_manager_employee_id_valid
+              arguments:
+                to: ref('dim_employees')
+                field: employee_id
+      - name: location
+      - name: employee_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["ACTIVE", "INACTIVE", "LEAVE"]
+      - name: salary_band
+      - name: effective_date
+      - name: from_dt
+        description: "Valid From"
+      - name: to_dt
+        description: "Valid To"
+      - name: current_record
+        description: "Current Record Flag (IF most recent then flag = 1)...Filter on current_record = 1"
+      - name: ingest_date
+  
+  # Facts
+  - name: fct_order_items
+    description: "Fact table of Orders Items"
+    columns:
+      - name: fact_order_items_id
+        description: "Surrogate key (md5 of order_items_id)"
+      - name: order_id
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+      - name: fct_orders_id
+        data_tests:
+          - relationships:
+              name: test_fk_fct_orders_id_1_valid
+              arguments:
+                field: fct_orders_id
+                to: ref('fct_orders')
+      - name: dim_product_id
+        data_tests:
+          - relationships:
+              name: test_fk_product_id_valid
+              arguments:
+                to: ref('dim_products')
+                field: dim_product_id
+      - name: quantity
+      - name: unit_price
+      - name: discount_amount
+      - name: line_total
+  
+  - name: fct_inventory_snapshots
+    description: "Inventory Snapshot Fact table"
+    columns:
+      - name: fct_inventory_snapshots_id
+        description: "Surrogate key (md5 of warehouse_id + product_id)"
+        tests:
+          - unique
+          - not_null
+      - name: snapshot_date
+      - name: dim_warehouse_id
+        data_tests:
+          - relationships:
+              name: test_fk_warehouse_id_valid
+              arguments:
+                field: dim_warehouse_id
+                to: ref('dim_warehouses')
+      - name: dim_product_id
+        data_tests:
+          - relationships:
+              name: test_fk_product_id_valid
+              arguments:
+                field: dim_product_id
+                to: ref('dim_products')
+      - name: quantity_on_hand
+      - name: quantity_reserved
+      - name: quantity_available
+      - name: reorder_point
+  
+  - name: fct_orders
+    description: "Orders Fact Table"
+    columns:
+      - name: fct_orders_id
+        description: "surrogate key (md5 of orders_id)"
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+      - name: dim_customer_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_customer_id_valid
+              arguments:
+                field: dim_customer_id
+                to: ref('dim_customers')
+      - name: order_timestamp
+      - name: dim_status_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_status_id_valid
+              arguments:
+                field: dim_status_id
+                to: ref('dim_status')
+      - name: dim_sales_channels_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_sales_channels_id_valid
+              arguments:
+                field: dim_sales_channels_id
+                to: ref('dim_sales_channels')
+      - name: dim_warehouse_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_warehouse_id_valid
+              arguments:
+                field: dim_warehouse_id
+                to: ref('dim_warehouses')
+      - name: promo_code
+        description: "Order promo code (later can be extended to promo dim)"
+  
+  - name: fct_payments
+    description: "Payments Fact (snowflake design)"
+    columns:
+      - name: fct_payment_id
+        description: "Surrogate key (md5 of payment_id)"
+        tests:
+          - unique
+          - not_null
+      - name: payment_id
+      - name: fct_orders_id
+        data_tests:
+          - relationships:
+              name: test_fk_fct_orders_id_valid
+              arguments:
+                field: fct_orders_id
+                to: ref('fct_orders')
+      - name: payment_timestamp
+      - name: dim_status_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_status_id_2_valid
+              arguments:
+                field: dim_status_id
+                to: ref('dim_status')
+      - name: payment_amount
+  - name: fct_shipments
+    description: "Shipments Fact"
+    columns:
+      - name: fct_shipment_id
+        description: "Surrogate key (md5 of shipments_id)"
+        tests:
+          - unique
+          - not_null
+      - name: shipment_id
+      - name: fct_orders_id
+        data_tests:
+          - relationships:
+              name: test_fk_fct_orders_id_2_valid
+              arguments:
+                field: fct_orders_id
+                to: ref('fct_orders')
+      - name: dim_warehouse_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_warehouse_id_2_valid
+              arguments:
+                field: dim_warehouse_id
+                to: ref('dim_warehouses')
+      - name: carrier
+      - name: shipped_timestamp
+      - name: delivered_timestamp
+      - name: dim_status_id
+        data_tests:
+          - relationships:
+              name: test_fk_dim_status_id_3_valid
+              arguments:
+                field: dim_status_id
+                to: ref('dim_status')
+  
+  - name: fct_returns
+    description: "Returns Fact Table"
+    columns:
+      - name: fct_returns_id
+        description: "surrogate key (md5 of return_id)"
+        tests:
+          - unique
+          - not_null
+      - name: return_id
+      - name: fct_orders_id
+        data_tests:
+          - relationships:
+              name: test_fk_fct_orders_id_3_valid
+              arguments:
+                field: fct_orders_id
+                to: ref('fct_orders')
+      - name: fct_order_items_id
+        data_tests:
+          - relationships:
+              name: test_fk_fct_order_items_id_valid
+              arguments:
+                field: fct_order_items_id
+                to: ref('fct_order_items')
+      - name: return_reason
+      - name: return_timestamp
+      - name: refund_amount

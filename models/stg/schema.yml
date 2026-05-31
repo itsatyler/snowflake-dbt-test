@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: lnd
+    database: warehouse
+    schema: lnd
+    tables:
+      - name: raw_employees
+
+models:
+  - name: stg_employees
+    description: "Staging View for Employees table in dw"
+    columns:
+      - name: employee_id
+      - name: first_name
+      - name: last_name
+      - name: department
+      - name: job_title
+      - name: manager_id
+      - name: location
+      - name: employee_status
+      - name: salary_band
+      - name: effective_date
+      - name: ingest_date
