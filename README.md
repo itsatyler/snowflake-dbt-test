@@ -92,7 +92,7 @@ uv run dbt test
 ```bash
 docker build -t testing-snowflake-dbt .
 docker run --rm -it \
-  -v "$HOME/.dbt:/root/.dbt:ro" \
+  -v "$HOME/.dbt:/root/.dbt" \
   -v "$PWD:/app" \
   testing-snowflake-dbt
 ```
