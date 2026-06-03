@@ -2,4 +2,4 @@
 
 select 
   *
-from {{ source('seed','physicians') }}
+from {{ ref('physicians') }}

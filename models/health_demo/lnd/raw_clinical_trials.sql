@@ -2,4 +2,4 @@
 
 select 
   *
-from {{ source('seed','clinical_trials') }}
+from {{ ref('clinical_trials') }}

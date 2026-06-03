@@ -1,0 +1,96 @@
+version: 2
+
+sources:
+  - name: dw
+    database: health_demo
+    schema: dw
+    tables:
+      - name: dim_clinical_trials
+      - name: dim_drugs
+      - name: dim_patients
+      - name: dim_physicians
+      - name: fct_adverse_events
+      - name: fct_drug_assignments
+      - name: fct_trial_enrollments
+
+models:
+  # ----------------------------------------------------------------------------------------
+  - name: trials_overview
+    description: "Clinical trial overview mart - one row per trial with enrollment, drug assignment, and adverse event rollups (current SCD2 records only)."
+    columns:
+      - name: dim_clinical_trial_id
+        description: "Primary key (one row per trial)"
+        tests:
+          - unique
+          - not_null
+      - name: trial_name
+      - name: therapeutic_area
+      - name: status
+      - name: sponsor_name
+      - name: phase
+      - name: end_date
+      - name: total_enrollments
+        description: "Count of current enrollments in the trial"
+      - name: enrolled_enrollments
+        description: "Enrollments with current_status = 'enrolled'"
+      - name: withdrawn_enrollments
+        description: "Enrollments with current_status = 'withdrawn'"
+      - name: completed_enrollments
+        description: "Enrollments with current_status = 'completed'"
+      - name: distinct_drugs_assigned
+        description: "Distinct drugs currently assigned to the trial"
+      - name: total_arms
+        description: "Distinct study arms (arm_label) in the trial"
+      - name: total_adverse_events
+        description: "Adverse events linked to the trial via enrollment"
+      - name: mild_adverse_events
+      - name: moderate_adverse_events
+      - name: severe_adverse_events
+  # ----------------------------------------------------------------------------------------
+  - name: drug_analysis
+    description: "Drug analytics mart - one row per drug with assignment volume, trial spread, and (trial-level) adverse event association (current SCD2 records only)."
+    columns:
+      - name: dim_drug_id
+        description: "Primary key (one row per drug)"
+        tests:
+          - unique
+          - not_null
+      - name: drug_name
+      - name: generic_name
+      - name: drug_class
+      - name: manufacturer
+      - name: approval_status
+      - name: total_assignments
+        description: "Count of current drug-assignment records"
+      - name: distinct_trials_assigned
+        description: "Distinct trials the drug is assigned to"
+      - name: distinct_therapeutic_areas
+        description: "Distinct therapeutic areas across assigned trials"
+      - name: avg_dosage_mg
+        description: "Average dosage_mg across current assignments"
+      - name: adverse_events_in_assigned_trials
+        description: "Adverse events occurring in trials where the drug is assigned. Trial-level association, NOT patient-level drug attribution (no patient-level drug-administration link exists in the model)."
+  # ----------------------------------------------------------------------------------------
+  - name: insurance_analysis
+    description: "Insurance analytics mart - one row per insurance_provider + insurance_plan_code with patient counts, demographics, trial participation, and adverse events."
+    columns:
+      - name: insurance_provider
+        description: "Part of grain (provider + plan_code)"
+      - name: insurance_plan_code
+        description: "Part of grain (provider + plan_code)"
+      - name: total_patients
+      - name: active_patients
+        description: "Patients with enrollment_status = 'active'"
+      - name: inactive_patients
+        description: "Patients with enrollment_status = 'inactive'"
+      - name: male_patients
+      - name: female_patients
+      - name: other_gender_patients
+      - name: distinct_states
+        description: "Distinct address_state values for the provider/plan"
+      - name: total_trial_enrollments
+        description: "Current trial enrollments by patients on this provider/plan"
+      - name: distinct_trials
+        description: "Distinct trials participated in"
+      - name: total_adverse_events
+        description: "Adverse events reported for patients on this provider/plan"

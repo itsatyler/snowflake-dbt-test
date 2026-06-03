@@ -9,19 +9,6 @@ version: 2
 # in this demo, the files are loaded through seed just to maintain simplicity
 # of the project and avoid additional pipelines
 
-sources:
-  - name: seed
-    database: health_demo
-    schema: seed
-    tables:
-      - name: adverse_events
-      - name: clinical_trials
-      - name: drugs
-      - name: patients
-      - name: physicians
-      - name: trial_drug_assignments
-      - name: trial_enrollments
-
 models:
   - name: raw_adverse_events
     columns:

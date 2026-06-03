@@ -2,4 +2,4 @@
 
 select 
   *
-from {{ source('seed','adverse_events') }}
+from {{ ref('adverse_events') }}

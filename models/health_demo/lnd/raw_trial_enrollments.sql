@@ -2,4 +2,4 @@
 
 select 
   *
-from {{ source('seed','trial_enrollments') }}
+from {{ ref('trial_enrollments') }}

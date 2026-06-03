@@ -2,4 +2,4 @@
 
 select 
   *
-from {{ source('seed','drugs') }}
+from {{ ref('drugs') }}

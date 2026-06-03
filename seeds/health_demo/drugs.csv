@@ -5,3 +5,11 @@ DRG002,Placinex,placineximab,Monoclonal Antibody,Investigational,GeneTech Labs,2
 DRG003,Reluvar,reluvastat,Statin,Approved,CardioRx Inc,2019-01-01
 DRG003,Reluvar,reluvastat,Statin - Extended,Approved,CardioRx Inc,2023-06-30
 DRG004,Trianol,trianolamide,Analgesic,Withdrawn,Vertex Med,2022-08-01
+DRG005,Immunex,immunolibmab,Monoclonal Antibody,Approved,GeneTech Labs,2023-01-15
+DRG006,Glucovar,glucovastat,GLP-1 Agonist,Approved,Stanford Bio,2024-02-01
+DRG007,Pulmair,pulmaterol,Bronchodilator,Investigational,RespireRx,2023-08-01
+DRG008,Oncoflex,oncoflexib,Kinase Inhibitor,Approved,NovaBio Pharma,2022-05-01
+DRG009,Rheumacin,rheumacinib,JAK Inhibitor,Investigational,Duke Therapeutics,2024-01-05
+DRG010,Cardiplex,cardiplexol,Beta Blocker,Approved,CardioRx Inc,2021-09-01
+DRG011,Neurovon,neurovastine,NMDA Antagonist,Investigational,Vertex Med,2023-03-01
+DRG012,Painaway,sulindac-pa,Analgesic,Withdrawn,Vertex Med,2022-12-01
