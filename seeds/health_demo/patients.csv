@@ -1,0 +1,8 @@
+patient_id,first_name,last_name,date_of_birth,gender,insurance_provider,insurance_plan_code,primary_physician_id,enrollment_status,address_state,created_at,updated_at
+P001,James,Harlow,1974-03-12,M,BlueCross,BCBS-PPO-Gold,DR001,Active,OH,2022-01-10,2024-06-01
+P001,James,Harlow,1974-03-12,M,Aetna,AET-HMO-Silver,DR001,Active,OH,2022-01-10,2025-02-14
+P002,Sandra,Voss,1989-07-22,F,UnitedHealth,UHC-EPO-Std,DR002,Active,TX,2021-05-03,2021-05-03
+P003,Marcus,Klein,1965-11-30,M,Cigna,CIG-PPO-Prem,DR003,Inactive,FL,2020-09-18,2023-08-01
+P003,Marcus,Klein,1965-11-30,M,Medicare,MCR-Part-B,DR004,Inactive,GA,2020-09-18,2024-11-20
+P004,Lena,Okafor,1992-04-05,F,Humana,HUM-HMO-Std,DR002,Active,NY,2023-02-28,2023-02-28
+P005,Derek,Chang,1958-08-17,M,Medicare,MCR-Part-A,DR001,Active,OH,2019-12-01,2025-01-07

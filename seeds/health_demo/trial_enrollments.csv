@@ -1,0 +1,7 @@
+enrollment_id,trial_id,patient_id,enrolled_date,withdrawal_date,withdrawal_reason,current_status,updated_at
+E001,T001,P001,2021-06-15,,,Completed,2024-01-31
+E002,T001,P003,2021-07-01,2022-05-10,Adverse Event,Withdrawn,2022-05-10
+E003,T002,P002,2022-04-01,,,Enrolled,2025-01-10
+E004,T002,P004,2022-05-15,2023-01-20,Personal Reasons,Withdrawn,2023-01-20
+E005,T003,P005,2024-09-10,,,Enrolled,2025-03-01
+E006,T004,P003,2021-02-01,2022-07-15,Trial Terminated,Withdrawn,2022-07-15

@@ -37,18 +37,62 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   warehouse_testing:
-    stg:
-      +materialized: view
-      +schema: stg
+    warehouse:
+      +database: warehouse
+      
+      stg:
+        +schema: stg
+        +materialized: view
+      
+      intermediate:
+        +schema: intermediate
+        +materialized: view
+      
+      dw:
+        +schema: dw
+        +materialized: table
+      
+      data_mart:
+        +schema: data_mart
+        +materialized: table
     
-    intermediate:
-      +materialized: view
-      +schema: intermediate
+    health_demo:
+      +database: health_demo
+      
+      lnd:
+        +schema: lnd
+        +materialized: table
+      
+      stg:
+        +schema: stg
+        +materialized: view
+      
+      intermediate:
+        +schema: intermediate
+        +materialized: view
+      
+      dw:
+        +schema: dw
+        +materialized: table
+      
+      data_mart:
+        +schema: data_mart
+        +materialized: table
+
+seeds:
+  warehouse_testing:
+    warehouse:
+      +database: warehouse
+      +schema: seed
     
-    dw:
-      +materialized: table
-      +schema: dw
+    health_demo:
+      +database: health_demo
+      +schema: seed
+
+snapshots:
+  warehouse_testing:
+    warehouse:
+      +database: warehouse
     
-    data_mart:
-      +materialized: table
-      +schema: data_mart
+    health_demo:
+      +database: health_demo

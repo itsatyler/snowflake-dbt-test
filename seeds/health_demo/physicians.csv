@@ -1,0 +1,7 @@
+physician_id,full_name,specialty,affiliated_hospital,license_state,npi_number,employment_type,updated_at
+DR001,Dr. Alicia Moreno,Oncology,St. Luke's Medical,OH,1234567890,Staff,2023-01-01
+DR001,Dr. Alicia Moreno,Oncology,Cleveland Clinic,OH,1234567890,Staff,2024-07-15
+DR002,Dr. Samuel Park,Neurology,NYU Langone,NY,2345678901,Contractor,2022-06-01
+DR003,Dr. Priya Nair,Cardiology,Mayo Clinic,MN,3456789012,Staff,2021-03-10
+DR003,Dr. Priya Nair,Cardiology,Johns Hopkins,MD,3456789012,Staff,2024-01-01
+DR004,Dr. Brandon Wells,Internal Medicine,Emory Hospital,GA,4567890123,Locum,2023-09-05

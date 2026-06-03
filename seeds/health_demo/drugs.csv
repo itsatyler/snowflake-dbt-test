@@ -1,0 +1,7 @@
+drug_id,drug_name,generic_name,drug_class,approval_status,manufacturer,updated_at
+DRG001,Xelivon,celivonib,Kinase Inhibitor,Investigational,NovaBio Pharma,2021-04-01
+DRG001,Xelivon,celivonib,Kinase Inhibitor,Approved,NovaBio Pharma,2024-02-10
+DRG002,Placinex,placineximab,Monoclonal Antibody,Investigational,GeneTech Labs,2020-11-15
+DRG003,Reluvar,reluvastat,Statin,Approved,CardioRx Inc,2019-01-01
+DRG003,Reluvar,reluvastat,Statin - Extended,Approved,CardioRx Inc,2023-06-30
+DRG004,Trianol,trianolamide,Analgesic,Withdrawn,Vertex Med,2022-08-01

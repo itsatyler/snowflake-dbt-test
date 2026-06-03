@@ -1,0 +1,5 @@
+event_id,enrollment_id,patient_id,event_date,severity,event_description,resolved_date,reported_by
+AE001,E002,P003,2022-04-20,Severe,Elevated liver enzymes,2022-05-01,DR003
+AE002,E001,P001,2022-09-15,Mild,Fatigue and nausea,2022-09-30,DR001
+AE003,E003,P002,2023-06-10,Moderate,Skin rash,2023-06-25,DR002
+AE004,E005,P005,2024-11-01,Mild,Headache,2024-11-05,DR001

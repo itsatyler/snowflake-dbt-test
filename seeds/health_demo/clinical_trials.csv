@@ -1,0 +1,5 @@
+trial_id,trial_name,sponsor_name,phase,therapeutic_area,status,start_date,end_date,updated_at
+T001,XELIV-301,NovaBio Pharma,Phase III,Oncology,Completed,2021-06-01,2024-01-31,2024-02-01
+T002,PLCN-102,GeneTech Labs,Phase II,Immunology,Active,2022-03-01,,2025-01-10
+T003,RELU-409,CardioRx Inc,Phase IV,Cardiology,Recruiting,2024-09-01,,2025-03-01
+T004,TRI-210,Vertex Med,Phase II,Pain Management,Terminated,2021-01-01,2022-07-15,2022-07-15

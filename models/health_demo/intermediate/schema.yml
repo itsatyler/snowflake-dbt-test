@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: stg
+    database: health_demo
+    tables:
+      - name: stg_adverse_events
+      - name: stg_clinical_trials
+      - name: stg_drugs
+      - name: stg_patients
+      - name: stg_physicians
+      - name: stg_trial_drug_assignments
+      - name: stg_trial_enrollments
+
+models:
+  - name: int_clinical_trials
+    columns:
+      - name: trial_id
+      - name: trial_name
+      - name: therapeutic_area
+      - name: status
+      - name: sponsor_name
+      - name: phase
+      - name: end_date
+      - name: updated_at
+      - name: rn
+  
+  - name: int_drugs
+    columns:
+      - name: drug_id
+      - name: drug_name
+      - name: generic_name
+      - name: drug_class
+      - name: manufacturer
+      - name: approval_status
+      - name: updated_at
+      - name: rn
+  
+  - name: int_patients
+    columns:
+      - name: patient_id
+      - name: first_name
+      - name: last_name
+      - name: date_of_birth
+      - name: gender
+      - name: address_state
+      - name: insurance_provider
+      - name: insurance_plan_code
+      - name: primary_physician_id
+      - name: enrollment_status
+      - name: created_at
+      - name: updated_at
+      - name: rn
+  
+  - name: int_physicians
+    columns:
+      - name: physician_id
+      - name: honorific
+      - name: first_name
+      - name: last_name
+      - name: specialty
+      - name: npi_number
+      - name: employment_type
+      - name: affiliated_hospital
+      - name: license_state
+      - name: updated_at
+      - name: rn
+  
+  - name: int_trial_drug_assignments
+    columns:
+      - name: arm_label
+      - name: assignment_id
+      - name: dosage_mg
+      - name: drug_id
+      - name: frequency
+      - name: trial_id
+      - name: rn
+  
+  - name: int_trial_enrollments
+    columns:
+      - name: current_status
+      - name: enrolled_date
+      - name: enrollment_id
+      - name: patient_id
+      - name: trial_id
+      - name: updated_at
+      - name: withdrawal_date
+      - name: withdrawal_reason
+      - name: rn
+  
+  - name: int_adverse_events
+    columns:
+      - name: enrollment_id
+      - name: event_date
+      - name: event_description
+      - name: event_id
+      - name: patient_id
+      - name: reported_by
+      - name: resolved_date
+      - name: severity
+      - name: rn
