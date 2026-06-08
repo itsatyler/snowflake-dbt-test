@@ -60,16 +60,16 @@ Schemas are routed by `macros/generate_schema_name.sql` so each layer lands in i
 ├── macros/
 │   └── generate_schema_name.sql
 ├── models/
-│   ├── stg/
-│   ├── intermediate/
-│   ├── dw/
-│   └── data_mart/
+│   └──warehouse/
+│       ├── stg/
+│       ├── intermediate/
+│       ├── dw/
+│       └── data_mart/
 ├── snapshots/
 │   └── snap_employees.sql
 ├── tests/
 │   └── test_no_self_managers.sql
-├── seeds/
-└── analyses/
+└── seeds/
 ```
 
 ## Usage
@@ -79,12 +79,12 @@ Schemas are routed by `macros/generate_schema_name.sql` so each layer lands in i
 uv run dbt build
 
 # Layer-by-layer
-uv run dbt run --select stg intermediate
+uv run dbt run --select warehouse.stg warehouse.intermediate
 uv run dbt snapshot
-uv run dbt run --select dw data_mart
+uv run dbt run --select warehouse.dw warehouse.data_mart
 
 # Tests only
-uv run dbt test
+uv run dbt test --select warehouse
 ```
 
 ## Docker
